@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
 import 'encoding_checker_method_channel.dart';
@@ -26,7 +28,9 @@ abstract class EncodingCheckerPlatform extends PlatformInterface {
   Future<String?> getPlatformVersion() {
     throw UnimplementedError('platformVersion() has not been implemented.');
   }
+
   Future<bool?> checkH265Support() {
-    throw UnimplementedError('checkH265Support method has not been implemented');
+    throw UnimplementedError(
+        'checkH265Support method has not been implemented');
   }
 }

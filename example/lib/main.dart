@@ -16,7 +16,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  String _platformVersion = 'Unknown';
   String _supportsH265 = 'Unknown';
   final _encodingCheckerPlugin = EncodingChecker();
 
@@ -28,16 +27,12 @@ class _MyAppState extends State<MyApp> {
 
   // Platform messages are asynchronous, so we initialize in an async method.
   Future<void> initPlatformState() async {
-    String platformVersion;
-    // Platform messages may fail, so we use a try/catch PlatformException.
-    // We also handle the message potentially returning null.
     try {
-      platformVersion =
-          await _encodingCheckerPlugin.getPlatformVersion() ?? 'Unknown platform version';
-      final checkResult =await _encodingCheckerPlugin.checkH265Support() ??false;
-      _supportsH265= checkResult.toString();
+      final checkResult =
+          await _encodingCheckerPlugin.checkH265Support() ?? false;
+      _supportsH265 = checkResult.toString();
     } on PlatformException {
-      platformVersion = 'Failed to get platform version.';
+      _supportsH265 = 'Failed to get data.';
     }
 
     // If the widget was removed from the tree while the asynchronous platform
@@ -45,9 +40,7 @@ class _MyAppState extends State<MyApp> {
     // setState to update our non-existent appearance.
     if (!mounted) return;
 
-    setState(() {
-      _platformVersion = platformVersion;
-    });
+    setState(() {});
   }
 
   @override
@@ -61,7 +54,6 @@ class _MyAppState extends State<MyApp> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text('Running on: $_platformVersion\n'),
               Text('Supports h265: $_supportsH265\n'),
             ],
           ),
